@@ -1,0 +1,11 @@
+{% extends 'students/base.html' %}
+
+{% block content %}
+<h3>Dashboard</h3>
+
+<div class="list-group">
+    <a href="{% url 'student_list' %}" class="list-group-item">Students</a>
+    <a href="{% url 'class_list' %}" class="list-group-item">Classes</a>
+    <a href="{% url 'division_list' %}" class="list-group-item">Divisions</a>
+</div>
+{% endblock %}

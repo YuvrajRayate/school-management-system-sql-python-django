@@ -1,0 +1,33 @@
+{% extends 'students/base.html' %}
+{% block content %}
+<h3>Add New Student</h3>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label>Student Name</label>
+    <input type="text" name="student_name" class="form-control" required>
+
+    <label>Roll No</label>
+    <input type="text" name="roll_no" class="form-control" required>
+
+    <label>Profile Picture</label>
+    <input type="file" name="profile_pic" class="form-control">
+
+    <label>Class</label>
+    <select name="school_class" class="form-control">
+        <option value="">Select Class</option>
+        {% for c in classes %}
+        <option value="{{ c.id }}">{{ c.class_name }}</option>
+        {% endfor %}
+    </select>
+
+    <label>Division</label>
+    <select name="division" class="form-control">
+        <option value="">Select Division</option>
+        {% for d in divisions %}
+        <option value="{{ d.id }}">{{ d.division_name }}</option>
+        {% endfor %}
+    </select>
+
+    <button type="submit" class="btn btn-primary mt-3">Save Student</button>
+</form>
+{% endblock %}

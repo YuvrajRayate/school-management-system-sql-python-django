@@ -1,0 +1,22 @@
+{% extends 'students/base.html' %}
+{% block content %}
+<h3>Edit Division</h3>
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label>Division Name</label>
+        <input type="text" name="division_name" value="{{ division.division_name }}" class="form-control" required>
+    </div>
+    <div class="form-group mt-2">
+        <label>Change Class</label>
+        <select name="school_class" class="form-control" required>
+            {% for c in classes %}
+            <option value="{{ c.id }}" {% if division.school_class.id == c.id %}selected{% endif %}>
+                {{ c.class_name }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-warning mt-3">Update Division</button>
+</form>
+{% endblock %}

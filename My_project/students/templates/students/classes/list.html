@@ -1,0 +1,23 @@
+{% extends 'students/base.html' %}
+{% block content %}
+
+<h3>Classes</h3>
+<a href="{% url 'class_add' %}" class="btn btn-success mb-2">Add Class</a>
+
+<table class="table table-bordered">
+{% for c in classes %}
+<tr>
+<td>{{ c.class_name }}</td>
+<td>
+<a href="{% url 'class_edit' c.id %}" class="btn btn-warning btn-sm">Edit</a>
+<a href="{% url 'class_delete' c.id %}" 
+   class="btn btn-danger btn-sm" 
+   onclick="confirmDelete(event)">
+   Delete
+</a>
+</td>
+</tr>
+{% endfor %}
+</table>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'students/base.html' %}
+{% block content %}
+<h3>Edit Student: {{ student.student_name }}</h3>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label>Student Name</label>
+    <input type="text" name="student_name" value="{{ student.student_name }}" class="form-control" required>
+
+    <label>Roll No</label>
+    <input type="text" name="roll_no" value="{{ student.roll_no }}" class="form-control" required>
+
+    <label>Profile Picture</label>
+    {% if student.profile_pic %}
+        <div class="mb-2"><img src="{{ student.profile_pic.url }}" width="100"></div>
+    {% endif %}
+    <input type="file" name="profile_pic" class="form-control">
+
+    <label>Class</label>
+    <select name="school_class" class="form-control">
+        <option value="">Select Class</option>
+        {% for c in classes %}
+        <option value="{{ c.id }}" {% if student.school_class.id == c.id %}selected{% endif %}>
+            {{ c.class_name }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <label>Division</label>
+    <select name="division" class="form-control">
+        <option value="">Select Division</option>
+        {% for d in divisions %}
+        <option value="{{ d.id }}" {% if student.division.id == d.id %}selected{% endif %}>
+            {{ d.division_name }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <button type="submit" class="btn btn-warning mt-3">Update Student</button>
+</form>
+{% endblock %}

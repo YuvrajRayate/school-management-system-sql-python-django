@@ -1,0 +1,102 @@
+{% extends 'students/base.html' %}
+{% block content %}
+
+<h3>Students</h3>
+
+<form method="get" class="mb-2">
+<input class="form-control" name="q" placeholder="Search student name">
+</form>
+
+<a href="{% url 'student_add' %}" class="btn btn-success mb-2">Add Student</a>
+
+<table class="table table-bordered">
+<tr>
+    <th>Photo</th> <th>ID</th>
+    <th>Name</th>
+    <th>Roll No</th>
+    <th>Actions</th>
+</tr>
+
+{% for s in students %}
+<tr>
+    <td>
+        {% if s.profile_pic %}
+            <img src="{{ s.profile_pic.url }}" 
+                 width="40" height="40" 
+                 style="object-fit:cover; border-radius:50%; cursor: pointer;" 
+                 data-bs-toggle="modal" 
+                 data-bs-target="#imageModal{{ s.id }}">
+        {% else %}
+            <div style="width:40px; height:40px; background:#eee; border-radius:50%; display:inline-block;"></div>
+        {% endif %}
+    </td>
+    <td>{{ s.id }}</td>
+    <td>{{ s.student_name }}</td>
+    <td>{{ s.roll_no }}</td>
+    <td>
+        <a href="{% url 'student_edit' s.id %}" class="btn btn-warning btn-sm">Edit</a>
+        <a href="{% url 'student_delete' s.id %}" class="btn btn-danger btn-sm" onclick="confirmDelete(event)">Delete</a>
+    </td>
+</tr>
+
+{% if s.profile_pic %}
+<div class="modal fade" id="imageModal{{ s.id }}" tabindex="-1" aria-labelledby="modalLabel{{ s.id }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel{{ s.id }}">{{ s.student_name }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="{{ s.profile_pic.url }}" class="img-fluid" style="max-height: 500px; border-radius: 5px;">
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endfor %}
+</table>
+
+<div class="d-flex justify-content-between align-items-center mt-4">
+
+    <!-- Left: First & Previous -->
+    <div>
+        {% if students.has_previous %}
+            <a class="btn btn-outline-primary btn-sm"
+               href="?page=1{% if q %}&q={{ q }}{% endif %}">
+                &laquo; First
+            </a>
+
+            <a class="btn btn-outline-primary btn-sm"
+               href="?page={{ students.previous_page_number }}{% if q %}&q={{ q }}{% endif %}">
+                Previous
+            </a>
+        {% endif %}
+    </div>
+
+    <!-- Center: Page info -->
+    <div class="fw-bold">
+        Page {{ students.number }} of {{ students.paginator.num_pages }}
+    </div>
+
+    <!-- Right: Next & Last -->
+    <div>
+        {% if students.has_next %}
+            <a class="btn btn-outline-primary btn-sm"
+               href="?page={{ students.next_page_number }}{% if q %}&q={{ q }}{% endif %}">
+                Next
+            </a>
+
+            <a class="btn btn-outline-primary btn-sm"
+               href="?page={{ students.paginator.num_pages }}{% if q %}&q={{ q }}{% endif %}">
+                Last &raquo;
+            </a>
+        {% endif %}
+    </div>
+
+</div>
+     
+</table>
+
+{% endblock %}
