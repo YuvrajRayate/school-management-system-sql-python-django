@@ -1,0 +1,19 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Virtual Environment
+myworld/
+venv/
+env/
+
+# Database
+db.sqlite3
+
+# Media (User uploaded content)
+media/student_pics/
+
+# Local settings/IDE
+.vscode/
+.idea/
+.DS_Store
